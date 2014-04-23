@@ -2,7 +2,12 @@
 #please call this script for all Mercurial addtional information
 
 echo start minging data...
+if [ "$1" == "" ];then
+CMD="hg clone https://workthethird@code.google.com/p/hgplus/"
+else
 CMD="hg clone "$1
+fi
+
 echo $CMD
 ret=$(time $CMD)
 echo " "
@@ -36,5 +41,6 @@ IFS=$OIFS
 
 cd $tFolder
 hg status --all | python ../HGPlus.py
+hg log | python ../HGPlusMore.py
 cd ..
 rm -Rf $tFolder
