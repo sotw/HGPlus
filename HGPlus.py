@@ -1,5 +1,5 @@
 # Author Pei-Chen Tsai aka Hammer
-# email : please use gitHub issue syste
+# email : please use gitHub issue system
 # To use: please pipe "hg status --all | python HGPlus.py" as start
 import os
 import sys
@@ -81,9 +81,10 @@ def main():
    print "hg status --all | python HGPlus.py <DB>" 
    print "ctrl+d if you don't pipe in any thing"
    verify()
+   print "===== OUTPUT START ====="
    getTotalFiles()   
    getTotal('LINE')
-   getTotal('SIZE')
+   getTotal('SIZE')   
 
 if __name__ == '__main__':
    main()

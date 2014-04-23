@@ -4,7 +4,8 @@
 echo start minging data...
 CMD="hg clone "$1
 echo $CMD
-ret=$($CMD)
+ret=$(time $CMD)
+echo " "
 #echo $ret
 
 OIFS=$IFS
