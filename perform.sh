@@ -9,6 +9,7 @@ CMD="hg clone "$1
 fi
 
 echo $CMD
+printf "\x1b[5;1;33mCloning Please Wait...\x1b[25;00m"
 ret=$(time $CMD)
 echo " "
 #echo $ret

@@ -8,6 +8,24 @@ from subprocess import PIPE
 global COI #user of changeset(commit)
 #|changeset|user|
 COI = []
+global COI_REV, COI_USR
+#clean user list no duplicate!
+COI_REV, COI_USR = range(2)
+USRARY = []
+
+#[]== algorithm could be better
+def isUserInsideUSRARY(name):
+   for usr in USRARY :
+      if name == usr :
+         return True
+   return False
+
+def prepareCleanUsrAry():
+   for entry in COI:
+     name = entry[COI_USR]
+     if isUserInsideUSRARY(name) == False :
+        USRARY.append(name)
+   print "%d users found" %(len(USRARY))
 
 def parsePIPE():
    UOI = []
@@ -19,7 +37,7 @@ def parsePIPE():
       #print lineAry[0]
       if lineAry[0] == 'changeset' :
          UOI = []
-         UOI.append(lineAry[2])
+         UOI.append(lineAry[1])
       if lineAry[0] == 'user' :
          UOI.append(lineAry[1])
          COI.append(UOI)
@@ -32,7 +50,8 @@ def main():
    #print "ctrl+d if you don't pipe in any thing"
    #verify()
    #print "===== OUTPUT START ====="
-   parsePIPE()
+   parsePIPE() #output total commits, also.
+   prepareCleanUsrAry() #output total users, also.
 
 if __name__ == "__main__":
    main()
