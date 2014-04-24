@@ -13,7 +13,7 @@ global COI_REV, COI_USR
 COI_REV, COI_USR = range(2)
 USRARY = []
 
-def prepareHcLogStatusPara(rev):
+def prepareHgLogStatusPara(rev):
    iOutput = ['hg','status','--change']
    iOutput.append(rev)
    return iOutput
@@ -27,7 +27,7 @@ def getUserContributeDetail():
       print "%s:" %(user)
       for e in COI:
          if e[COI_USR] == user:            
-            cmd = prepareHcLogStatusPara(e[COI_REV])            
+            cmd = prepareHgLogStatusPara(e[COI_REV])            
             output = Popen(cmd, stdout=PIPE).communicate()[0]         
             retAry = output.split('\n')
             for line in retAry:
