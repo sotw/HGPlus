@@ -13,6 +13,38 @@ global COI_REV, COI_USR
 COI_REV, COI_USR = range(2)
 USRARY = []
 
+def prepareHcLogStatusPara(rev):
+   iOutput = ['hg','status','--change']
+   iOutput.append(rev)
+   return iOutput
+
+def getUserContributeDetail():
+   print "===== User activity detail data ====="
+   for user in USRARY:
+      totalCreateFileCnt = 0
+      totalDeletionFileCnt = 0
+      totalModifyFileCnt = 0
+      print "%s:" %(user)
+      for e in COI:
+         if e[COI_USR] == user:            
+            cmd = prepareHcLogStatusPara(e[COI_REV])            
+            output = Popen(cmd, stdout=PIPE).communicate()[0]         
+            retAry = output.split('\n')
+            for line in retAry:
+               line = line.lstrip(' ')
+               line = line.rstrip(' ')
+               #print line
+               fAry = line.split(' ')
+               if fAry[0] == 'M':
+                  totalModifyFileCnt+=1
+               elif fAry[0] == 'A':
+                  totalCreateFileCnt+=1
+               elif fAry[0] == 'R':
+                  totalDeletionFileCnt+=1
+      print "%d total create File found" %(totalCreateFileCnt)
+      print "%d total delete File found" %(totalDeletionFileCnt)
+      print "%d total modify File found" %(totalModifyFileCnt)
+
 #[]== algorithm could be better
 def isUserInsideUSRARY(name):
    for usr in USRARY :
@@ -23,7 +55,7 @@ def isUserInsideUSRARY(name):
 def prepareCleanUsrAry():
    for entry in COI:
      name = entry[COI_USR]
-     if isUserInsideUSRARY(name) == False :
+     if isUserInsideUSRARY(name) == False :        
         USRARY.append(name)
    print "%d users found" %(len(USRARY))
 
@@ -38,8 +70,8 @@ def parsePIPE():
       if lineAry[0] == 'changeset' :
          UOI = []
          UOI.append(lineAry[1])
-      if lineAry[0] == 'user' :
-         UOI.append(lineAry[1])
+      if lineAry[0] == 'user' :         
+         UOI.append(lineAry[1].strip('\n'))
          COI.append(UOI)
 
    print '%d commit found' %(len(COI))
@@ -52,6 +84,7 @@ def main():
    #print "===== OUTPUT START ====="
    parsePIPE() #output total commits, also.
    prepareCleanUsrAry() #output total users, also.
+   getUserContributeDetail()
 
 if __name__ == "__main__":
    main()

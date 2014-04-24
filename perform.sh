@@ -45,3 +45,4 @@ hg status --all | python ../HGPlus.py
 hg log | python ../HGPlusMore.py
 cd ..
 rm -Rf $tFolder
+echo end minging data...
