@@ -1,7 +1,7 @@
 #Auther Pei-Chen Tsai AKA Hammer
 #please call this script for all Mercurial addtional information
 
-echo start minging data...
+echo start mining data...
 if [ "$1" == "" ];then
 CMD="hg clone https://workthethird@code.google.com/p/hgplus/"
 else
@@ -45,4 +45,4 @@ hg status --all | python ../HGPlus.py
 hg log | python ../HGPlusMore.py
 cd ..
 rm -Rf $tFolder
-echo end minging data...
+echo end mining data...
